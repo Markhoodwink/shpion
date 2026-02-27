@@ -3,10 +3,12 @@ from aiogram.types import (ReplyKeyboardMarkup,  KeyboardButton,
 
 menu = ReplyKeyboardMarkup(
     keyboard =  [
-        [KeyboardButton(text='начать игру 🎃')],
+        [KeyboardButton(text='начать игру сложно 🎃')],
+        [KeyboardButton(text='начать игру легко 🍉')],
+        [KeyboardButton(text='начать игру интересно 🍥')]
     ], 
     resize_keyboard=True,
-    #input_field_placeholder='Сколько игроков'
+    input_field_placeholder='Выберите тип игры'
 )
 
 restart = InlineKeyboardMarkup(
