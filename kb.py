@@ -3,7 +3,7 @@ from aiogram.types import (ReplyKeyboardMarkup,  KeyboardButton,
 
 menu = ReplyKeyboardMarkup(
     keyboard =  [
-        [KeyboardButton(text='начать игру')],
+        [KeyboardButton(text='начать игру 🎃')],
     ], 
     resize_keyboard=True,
     #input_field_placeholder='Сколько игроков'
