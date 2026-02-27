@@ -5,7 +5,9 @@ menu = ReplyKeyboardMarkup(
     keyboard =  [
         [KeyboardButton(text='начать игру сложно 🎃')],
         [KeyboardButton(text='начать игру легко 🍉')],
-        [KeyboardButton(text='начать игру интересно 🍥')]
+        [KeyboardButton(text='начать игру интересно 🍥')],
+        [KeyboardButton(text='начать игру персонажи 👀'),
+        KeyboardButton(text='начать игру кино 🎥')]
     ], 
     resize_keyboard=True,
     input_field_placeholder='Выберите тип игры'

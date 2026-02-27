@@ -3,13 +3,9 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import CommandStart 
 import random
 import kb
-import words
-from words import *
-import phrases
-import words_ez
+import words, phrases, words_ez, people, films
 
 user = Router()
-n = 1
 
 @user.message(CommandStart())
 async def cmd_start(message: Message):
@@ -20,9 +16,6 @@ async def start(message: Message):
     await message.delete()
     global word_list
     word_list = words.WORDS_HARD
-    global num_players, n
-    num_players = 0
-    n = 1
     await message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
@@ -31,9 +24,6 @@ async def start(message: Message):
     await message.delete()
     global word_list
     word_list = words_ez.WORDS_EZ
-    global num_players, n
-    num_players = 0
-    n = 1
     await message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog)
 
@@ -42,27 +32,38 @@ async def start(message: Message):
     await message.delete()
     global word_list
     word_list = phrases.PHRASES
-    global num_players, n
-    num_players = 0
-    n = 1
     await message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog)
+
+@user.message(F.text == 'начать игру персонажи 👀')
+async def start(message: Message):
+    await message.delete()
+    global word_list
+    word_list = people.PEOPLE_WORDS
+    await message.answer('выбери кол-во участников 🍟:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.message(F.text == 'начать игру кино 🎥')
+async def start(message: Message):
+    await message.delete()
+    global word_list
+    word_list = films.MOVIES_WORDS
+    await message.answer('выбери кол-во участников 🍟:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.callback_query(F.data.startswith('restart'))
 async def cmd_hello(callback: CallbackQuery):
     await callback.message.delete()
-    global num_players, n
-    num_players = 0
-    n = 1
     await callback.message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog)
 
 @user.callback_query(F.data.startswith('players'))
 async def chek_pl(callback: CallbackQuery):
     await callback.message.delete()
-    global spisok
-    global num_players
+    global spisok, num_players, n
     spisok = []
+    num_players = 0
+    n = 1
     num_players = int(callback.data.split('_')[1])
     first_word, sec_word = random.sample(word_list, 2)
     if num_players < 5:
