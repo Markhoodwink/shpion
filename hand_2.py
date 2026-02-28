@@ -4,7 +4,6 @@ from aiogram.filters.command import CommandStart
 import random
 import kb
 import words, phrases, words_ez, people, films, english, clash_royale, dota
-
 user = Router()
 smile = ''
 
