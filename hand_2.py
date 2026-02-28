@@ -1,21 +1,19 @@
 from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters.command import CommandStart 
+from aiogram.filters.command import CommandStart
 import random
 import kb
 import words, phrases, words_ez, people, films, english, clash_royale, dota
 user = Router()
-smile = ''
 
 @user.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.answer('Добро пожаловать 🕵️‍♀️', reply_markup=kb.menu)
+    await message.answer('Добро пожаловать 🕵️‍♀️\n\nВыберите тип игры:', reply_markup=kb.restart)
 
 @user.message(F.text == 'начать игру сложно 🎃')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🎃'
+    global word_list
     word_list = words.WORDS_HARD
     await message.answer('🎃 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
@@ -23,8 +21,7 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру легко 🍉')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🍉'
+    global word_list
     word_list = words_ez.WORDS_EZ
     await message.answer('🍉 выбери кол-во участников:',
                          reply_markup=kb.catalog)
@@ -32,8 +29,7 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру интересно 🍥')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🍥'
+    global word_list
     word_list = phrases.PHRASES
     await message.answer('🍥 выбери кол-во участников:',
                          reply_markup=kb.catalog)
@@ -41,8 +37,7 @@ async def start(message: Message):
 @user.message(F.text == 'start game english 💂‍♀️')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '💂‍♀️'
+    global word_list
     word_list = english.ENGLISH_WORDS
     await message.answer('💂‍♀️ выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
@@ -50,8 +45,7 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру clash royale 🃏')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🃏'
+    global word_list
     word_list = clash_royale.clash_royale_cards
     await message.answer('🃏 выбери кол-во участников:',
                          reply_markup=kb.catalog)
@@ -59,8 +53,7 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру dota 2 🐦‍🔥')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🐦‍🔥'
+    global word_list
     word_list = dota.dota_2_heroes
     await message.answer('🐦‍🔥 выбери кол-во участников:',
                          reply_markup=kb.catalog)
@@ -68,8 +61,7 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру персонажи 👀')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '👀'
+    global word_list
     word_list = people.PEOPLE_WORDS
     await message.answer('👀 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
@@ -77,17 +69,25 @@ async def start(message: Message):
 @user.message(F.text == 'начать игру кино 🎥')
 async def start(message: Message):
     await message.delete()
-    global word_list, smile
-    smile = '🎥'
+    global word_list
     word_list = films.MOVIES_WORDS
     await message.answer('🎥 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.callback_query(F.data.startswith('restart'))
 async def cmd_hello(callback: CallbackQuery):
+    global type_of_game, id
+    if callback.data != 'restart_None':
+        type_of_game = callback.data.split('_')[1]
     await callback.message.delete()
-    await callback.message.answer(f'{smile} выбери кол-во участников:',
-                         reply_markup=kb.catalog)
+    await callback.message.answer('выбери сложность:',
+                         reply_markup=kb.menu)
+
+@user.callback_query(F.data.startswith('choose_type'))
+async def cmd_hello(callback: CallbackQuery):
+    await callback.message.delete()
+    await callback.message.answer('Выбери тип игры 🕵️‍♀️:',
+                         reply_markup=kb.restart)
 
 @user.callback_query(F.data.startswith('players'))
 async def chek_pl(callback: CallbackQuery):
@@ -96,7 +96,11 @@ async def chek_pl(callback: CallbackQuery):
     spisok = []
     n = 1
     num_players = int(callback.data.split('_')[1])
-    first_word, sec_word = random.sample(word_list, 2)
+    if type_of_game == 'nobody':
+        first_word, sec_word = random.sample(word_list, 2)
+    else:
+        first_word = random.choice(word_list)
+        sec_word = 'ТЫ ШПИОН 🥷'
     for i in range(num_players):
         spisok.append(first_word)
     if num_players < 5:

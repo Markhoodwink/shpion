@@ -9,13 +9,13 @@ menu = ReplyKeyboardMarkup(
         [KeyboardButton(text='начать игру персонажи 👀'), KeyboardButton(text='начать игру кино 🎥')]
     ], 
     resize_keyboard=True,
-    input_field_placeholder='Выберите сложность игры'
+    input_field_placeholder='Выберите тип игры'
 )
 
 restart = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text='никто не знает кто шпион ❔', callback_data='restart_nobody')],
-        [InlineKeyboardButton(text='шпион знает, что он шпион 🥷', callback_data='restart_knows')]
+        [InlineKeyboardButton(text='никто не знает кто шпион 🕵️‍♀️', callback_data='restart')],
+        [InlineKeyboardButton(text='шпион не знает, что он шпион 🕵️‍♀️', callback_data='restart')]
     ]
 )
 
@@ -42,9 +42,9 @@ game_hide = InlineKeyboardMarkup(
     ]
 )
 
-
 game_again = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text='cкрыть 🔄️', callback_data='choose_type')],
+        [InlineKeyboardButton(text='cкрыть 🔄️', callback_data='restart')],
     ]
+    
 )
