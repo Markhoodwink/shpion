@@ -4,7 +4,7 @@ from aiogram.types import (ReplyKeyboardMarkup,  KeyboardButton,
 menu = ReplyKeyboardMarkup(
     keyboard =  [
         [KeyboardButton(text='начать игру сложно 🎃'), KeyboardButton(text='начать игру легко 🍉')],
-        [KeyboardButton(text='начать игру интересно 🍥'),KeyboardButton(text='start game english 💂‍♀️'), 
+        [KeyboardButton(text='начать игру интересно 🍥'),KeyboardButton(text='start game english 💂‍♀️')], 
         [KeyboardButton(text='начать игру clash royale 🃏'), KeyboardButton(text='начать игру dota 2 🐦‍🔥')]
         [KeyboardButton(text='начать игру персонажи 👀'), KeyboardButton(text='начать игру кино 🎥')]
     ], 
