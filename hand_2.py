@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import CommandStart 
 import random
 import kb
-import words, phrases, words_ez, people, films, english
+import words, phrases, words_ez, people, films, english, clash_royale, dota
 
 user = Router()
 
@@ -42,6 +42,22 @@ async def start(message: Message):
     word_list = english.ENGLISH_WORDS
     await message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.message(F.text == 'начать игру clash royale 🃏')
+async def start(message: Message):
+    await message.delete()
+    global word_list
+    word_list = clash_royale.clash_royale_cards
+    await message.answer('выбери кол-во участников 🍟:',
+                         reply_markup=kb.catalog)
+
+@user.message(F.text == 'начать игру dota 2 🐦‍🔥')
+async def start(message: Message):
+    await message.delete()
+    global word_list
+    word_list = dota.dota_2_heroes
+    await message.answer('выбери кол-во участников 🍟:',
+                         reply_markup=kb.catalog)
 
 @user.message(F.text == 'начать игру персонажи 👀')
 async def start(message: Message):
