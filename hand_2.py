@@ -95,24 +95,19 @@ async def chek_pl(callback: CallbackQuery):
     await callback.message.delete()
     global spisok, num_players, n
     spisok = []
-    num_players = 0
     n = 1
     num_players = int(callback.data.split('_')[1])
     first_word, sec_word = random.sample(word_list, 2)
+    for i in range(num_players):
+        spisok.append(first_word)
     if num_players < 5:
-        for i in range(num_players):
-            spisok.append(first_word)
         ind  = random.randint(0, num_players - 1)
         spisok[ind] = sec_word
     elif num_players < 8:
-        for i in range(num_players):
-            spisok.append(first_word)
         ind1, ind2 = random.sample(range(0, num_players - 1), 2)
         spisok[ind1] = sec_word
         spisok[ind2] = sec_word
     else:
-        for i in range(num_players):
-            spisok.append(first_word)
         ind1, ind2, ind3 = random.sample(range(0, num_players - 1), 3)
         spisok[ind1] = sec_word
         spisok[ind2] = sec_word
