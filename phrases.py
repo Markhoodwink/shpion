@@ -205,3 +205,4 @@ MOD_Words = [
 
 
 PHRASES = PHRASES + MOD_Words
+print(len(PHRASES))

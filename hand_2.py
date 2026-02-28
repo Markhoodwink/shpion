@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import CommandStart 
 import random
 import kb
-import words, phrases, words_ez, people, films
+import words, phrases, words_ez, people, films, english
 
 user = Router()
 
@@ -34,6 +34,14 @@ async def start(message: Message):
     word_list = phrases.PHRASES
     await message.answer('выбери кол-во участников 🍟:',
                          reply_markup=kb.catalog)
+
+@user.message(F.text == 'start game english 🫖')
+async def start(message: Message):
+    await message.delete()
+    global word_list
+    word_list = english.ENGLISH_WORDS
+    await message.answer('выбери кол-во участников 🍟:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.message(F.text == 'начать игру персонажи 👀')
 async def start(message: Message):
