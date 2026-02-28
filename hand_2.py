@@ -6,6 +6,7 @@ import kb
 import words, phrases, words_ez, people, films, english, clash_royale, dota
 
 user = Router()
+smile = ''
 
 @user.message(CommandStart())
 async def cmd_start(message: Message):
@@ -14,71 +15,79 @@ async def cmd_start(message: Message):
 @user.message(F.text == 'начать игру сложно 🎃')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🎃'
     word_list = words.WORDS_HARD
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🎃 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.message(F.text == 'начать игру легко 🍉')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🍉'
     word_list = words_ez.WORDS_EZ
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🍉 выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
 @user.message(F.text == 'начать игру интересно 🍥')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🍥'
     word_list = phrases.PHRASES
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🍥 выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
 @user.message(F.text == 'start game english 🫖')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🫖'
     word_list = english.ENGLISH_WORDS
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🫖 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.message(F.text == 'начать игру clash royale 🃏')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🃏'
     word_list = clash_royale.clash_royale_cards
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🃏 выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
 @user.message(F.text == 'начать игру dota 2 🐦‍🔥')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🐦‍🔥'
     word_list = dota.dota_2_heroes
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🐦‍🔥 выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
 @user.message(F.text == 'начать игру персонажи 👀')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '👀'
     word_list = people.PEOPLE_WORDS
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('👀 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.message(F.text == 'начать игру кино 🎥')
 async def start(message: Message):
     await message.delete()
-    global word_list
+    global word_list, smile
+    smile = '🎥'
     word_list = films.MOVIES_WORDS
-    await message.answer('выбери кол-во участников 🍟:',
+    await message.answer('🎥 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.callback_query(F.data.startswith('restart'))
 async def cmd_hello(callback: CallbackQuery):
     await callback.message.delete()
-    await callback.message.answer('выбери кол-во участников 🍟:',
+    await callback.message.answer(f'{smile} выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
 @user.callback_query(F.data.startswith('players'))
