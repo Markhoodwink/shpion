@@ -39,13 +39,13 @@ async def start(message: Message):
     await message.answer('🍥 выбери кол-во участников:',
                          reply_markup=kb.catalog)
 
-@user.message(F.text == 'start game english 🫖')
+@user.message(F.text == 'start game english 💂‍♀️')
 async def start(message: Message):
     await message.delete()
     global word_list, smile
-    smile = '🫖'
+    smile = '💂‍♀️'
     word_list = english.ENGLISH_WORDS
-    await message.answer('🫖 выбери кол-во участников:',
+    await message.answer('💂‍♀️ выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.message(F.text == 'начать игру clash royale 🃏')
