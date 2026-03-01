@@ -77,17 +77,18 @@ async def start(message: Message):
 @user.callback_query(F.data.startswith('restart'))
 async def cmd_hello(callback: CallbackQuery):
     global type_of_game, id
-    if callback.data != 'restart_None':
-        type_of_game = callback.data.split('_')[1]
+    type_of_game = callback.data.split('_')[1]
     await callback.message.delete()
-    await callback.message.answer('выбери сложность:',
-                         reply_markup=kb.menu)
+    await callback.message.answer('выбери сложность:', reply_markup=kb.menu)
 
 @user.callback_query(F.data.startswith('choose_type'))
 async def cmd_hello(callback: CallbackQuery):
     await callback.message.delete()
-    await callback.message.answer('Выбери тип игры 🕵️‍♀️:',
-                         reply_markup=kb.restart)
+    my_list = list(range(1, num_players + 1))
+    random.shuffle(my_list)
+    l = ' '.join(str(x) for x in my_list)
+    await callback.message.answer(f'{l} `{" - порядок"}`\n\nВыбери тип игры 🕵️‍♀️:',
+                         reply_markup=kb.restart, parse_mode='Markdown')
 
 @user.callback_query(F.data.startswith('players'))
 async def chek_pl(callback: CallbackQuery):
@@ -125,7 +126,6 @@ async def chek_word(callback: CallbackQuery):
     n += 1
     await callback.message.answer(f'`{n}` игрок',
     reply_markup=kb.game_show, parse_mode='Markdown')
-
 
 @user.callback_query(F.data.startswith('hide'))
 async def hide_word(callback: CallbackQuery):
