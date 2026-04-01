@@ -1,15 +1,14 @@
 from aiogram.types import (ReplyKeyboardMarkup,  KeyboardButton,
                             InlineKeyboardMarkup, InlineKeyboardButton)
 
-menu = ReplyKeyboardMarkup(
-    keyboard =  [
-        [KeyboardButton(text='начать игру сложно 🎃'), KeyboardButton(text='начать игру легко 🍉')],
-        [KeyboardButton(text='начать игру интересно 🍥'),KeyboardButton(text='start game english 💂‍♀️')], 
-        [KeyboardButton(text='начать игру clash royale 🃏'), KeyboardButton(text='начать игру dota 2 🐦‍🔥')],
-        [KeyboardButton(text='начать игру персонажи 👀'), KeyboardButton(text='начать игру кино 🎥')]
+menu = InlineKeyboardMarkup(
+    inline_keyboard =  [
+        [InlineKeyboardButton(text='сложно 🎃', callback_data='diff_hard'), InlineKeyboardButton(text='легко 🍉', callback_data='diff_easy')],
+        [InlineKeyboardButton(text='интересно 🍥', callback_data='diff_int'),InlineKeyboardButton(text='english 💂‍♀️', callback_data='diff_eng')], 
+        [InlineKeyboardButton(text='clash royale 🃏', callback_data='diff_royale'), InlineKeyboardButton(text='dota 2 🐦‍🔥', callback_data='diff_dota')],
+        [InlineKeyboardButton(text='персонажи 👀', callback_data='diff_persons'), InlineKeyboardButton(text='кино 🎥', callback_data='diff_cinema')],
+        [InlineKeyboardButton(text='бренды 💰', callback_data='diff_brends'), InlineKeyboardButton(text='математика 📐', callback_data='diff_math')]
     ], 
-    resize_keyboard=True,
-    input_field_placeholder='Выберите сложность игры'
 )
 
 restart = InlineKeyboardMarkup(

@@ -1,77 +1,92 @@
 from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import CommandStart
-import random
-import kb
-import words, phrases, words_ez, people, films, english, clash_royale, dota
+import random, kb
+import words, phrases, words_ez, people, films, english, clash_royale, dota, brends, math_formuls
 user = Router()
 
 @user.message(CommandStart())
 async def cmd_start(message: Message):
     await message.answer('Добро пожаловать 🕵️‍♀️\n\nВыберите тип игры:', reply_markup=kb.restart)
 
-@user.message(F.text == 'начать игру сложно 🎃')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_hard')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = words.WORDS_HARD
-    await message.answer('🎃 выбери кол-во участников:',
+    await callback.message.answer('🎃 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
-@user.message(F.text == 'начать игру легко 🍉')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_easy')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = words_ez.WORDS_EZ
-    await message.answer('🍉 выбери кол-во участников:',
-                         reply_markup=kb.catalog)
+    await callback.message.answer('🍉 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
 
-@user.message(F.text == 'начать игру интересно 🍥')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_int')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = phrases.PHRASES
-    await message.answer('🍥 выбери кол-во участников:',
-                         reply_markup=kb.catalog)
+    await callback.message.answer('🍥 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
 
-@user.message(F.text == 'start game english 💂‍♀️')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_eng')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = english.ENGLISH_WORDS
-    await message.answer('💂‍♀️ выбери кол-во участников:',
+    await callback.message.answer('💂‍♀️ выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
-@user.message(F.text == 'начать игру clash royale 🃏')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_royale')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = clash_royale.clash_royale_cards
-    await message.answer('🃏 выбери кол-во участников:',
-                         reply_markup=kb.catalog)
-
-@user.message(F.text == 'начать игру dota 2 🐦‍🔥')
-async def start(message: Message):
-    await message.delete()
-    global word_list
-    word_list = dota.dota_2_heroes
-    await message.answer('🐦‍🔥 выбери кол-во участников:',
-                         reply_markup=kb.catalog)
-
-@user.message(F.text == 'начать игру персонажи 👀')
-async def start(message: Message):
-    await message.delete()
-    global word_list
-    word_list = people.PEOPLE_WORDS
-    await message.answer('👀 выбери кол-во участников:',
+    await callback.message.answer('🃏 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
-@user.message(F.text == 'начать игру кино 🎥')
-async def start(message: Message):
-    await message.delete()
+@user.callback_query(F.data == 'diff_dota')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
+    global word_list
+    word_list = dota.dota_2_heroes
+    await callback.message.answer('🐦‍🔥 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.callback_query(F.data == 'diff_persons')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
+    global word_list
+    word_list = people.PEOPLE_WORDS
+    await callback.message.answer('👀 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.callback_query(F.data == 'diff_cinema')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
     global word_list
     word_list = films.MOVIES_WORDS
-    await message.answer('🎥 выбери кол-во участников:',
+    await callback.message.answer('🎥 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.callback_query(F.data == 'diff_brends')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
+    global word_list
+    word_list = brends.brands
+    await callback.message.answer('💰 выбери кол-во участников:',
+                         reply_markup=kb.catalog, parse_mode='Markdown')
+
+@user.callback_query(F.data == 'diff_math')
+async def start(callback: CallbackQuery):
+    await callback.message.delete()
+    global word_list
+    word_list = math_formuls.math_concepts
+    await callback.message.answer('📐 выбери кол-во участников:',
                          reply_markup=kb.catalog, parse_mode='Markdown')
 
 @user.callback_query(F.data.startswith('restart'))
@@ -79,7 +94,7 @@ async def cmd_hello(callback: CallbackQuery):
     global type_of_game, id
     type_of_game = callback.data.split('_')[1]
     await callback.message.delete()
-    await callback.message.answer('выбери сложность:', reply_markup=kb.menu)
+    await callback.message.answer('начать игру:', reply_markup=kb.menu)
 
 @user.callback_query(F.data.startswith('choose_type'))
 async def cmd_hello(callback: CallbackQuery):
